@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_Layout";
+	string route = Context.Request.Path;
+	var emotionFunctions = new EmotionFunctions();
+	var styledComponentsFunctions = new StyledComponentsFunctions();
+	var reactJssFunctions = new ReactJssFunctions();
+	var helmetFunctions = new ReactHelmetFunctions();
+
+	var chainedFunctions = new ChainedRenderFunctions(emotionFunctions, styledComponentsFunctions, reactJssFunctions, helmetFunctions);
+}
+
+@Html.ReactRouter("Components.RootComponent", (object)ViewBag.properties, path: route, renderFunctions: chainedFunctions)
+@{
+	ViewBag.ServerStyles = styledComponentsFunctions.RenderedStyles + reactJssFunctions.RenderedStyles;
+}
